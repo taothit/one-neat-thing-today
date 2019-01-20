@@ -29,7 +29,7 @@ host: localhost:8080
 info:
   description: Discover something new each day by being given an item from a curated
     list.
-  title: One new thing a day
+  title: A new thing each day
   version: ""
 paths:
   /new/thing/today:
@@ -48,6 +48,17 @@ paths:
       summary: today newThing
       tags:
       - newThing
+  /swagger.json:
+    get:
+      operationId: swagger#/swagger.json
+      responses:
+        "200":
+          description: File downloaded
+          schema:
+            type: file
+      schemes:
+      - http
+      summary: Download swagger/swagger.json
 produces:
 - application/json
 - application/xml

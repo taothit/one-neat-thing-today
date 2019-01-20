@@ -6,7 +6,7 @@ import (
 )
 
 var _ = API("Discovery", func() {
-	Title("One new thing a day")
+	Title("A new thing each day")
 	Description("Discover something new each day by being given an item from a curated list.")
 	Host("localhost:8080")
 	Scheme("http")
@@ -21,7 +21,13 @@ var _ = Resource("newThing", func() {
 		Description("GET the new thing for the day")
 		Response(OK, NewThingMedia)
 	})
+})
 
+var _ = Resource("swagger", func() {
+	Origin("*", func() {
+		Methods("GET")
+	})
+	Files("/swagger.json", "swagger/swagger.json")
 })
 
 // NewThingMedia represents a new thing with its name, description/definition,
