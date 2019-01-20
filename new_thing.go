@@ -17,10 +17,13 @@ func NewNewThingController(service *goa.Service) *NewThingController {
 
 // Today runs the today action.
 func (c *NewThingController) Today(ctx *app.TodayNewThingContext) error {
-	// NewThingController_Today: start_implement
+	name := "OneNewThingToday Service"
+	def := "A sweet new service that gives users a new thing to learn each day."
+	link := "https://github.com/taothit/one-new-thing-today"
+	newThing := &app.NewThing{
+		Name:       &name,
+		Definition: &def,
+		Link:       &link}
 
-	// Put your logic here
-
-	return nil
-	// NewThingController_Today: end_implement
+	return ctx.OK(newThing)
 }

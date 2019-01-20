@@ -19,7 +19,7 @@ var _ = Resource("newThing", func() {
 	Action("today", func() {
 		Routing(GET("today"))
 		Description("GET the new thing for the day")
-		Response(OK, "application/json")
+		Response(OK, NewThingMedia)
 	})
 
 })

@@ -3,6 +3,28 @@ consumes:
 - application/xml
 - application/gob
 - application/x-gob
+definitions:
+  NewThing:
+    description: NewThing media type (default view)
+    example:
+      definition: Enim explicabo rerum ducimus qui.
+      link: Minus quae eum ut iste.
+      name: Enim id voluptatem velit.
+    properties:
+      definition:
+        description: What the new thing is
+        example: Enim explicabo rerum ducimus qui.
+        type: string
+      link:
+        description: Illustrative link for the new thing
+        example: Minus quae eum ut iste.
+        type: string
+      name:
+        description: The new thing
+        example: Enim id voluptatem velit.
+        type: string
+    title: 'Mediatype identifier: application/vnd.douthitlab.newthing; view=default'
+    type: object
 host: localhost:8080
 info:
   description: Discover something new each day by being given an item from a curated
@@ -14,9 +36,13 @@ paths:
     get:
       description: GET the new thing for the day
       operationId: newThing#today
+      produces:
+      - application/vnd.douthitlab.newthing
       responses:
         "200":
           description: OK
+          schema:
+            $ref: '#/definitions/NewThing'
       schemes:
       - http
       summary: today newThing
