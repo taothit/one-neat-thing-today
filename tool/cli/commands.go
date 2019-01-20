@@ -26,8 +26,8 @@ import (
 )
 
 type (
-	// TodayNewCommand is the command line data structure for the today action of new
-	TodayNewCommand struct {
+	// TodayNewThingCommand is the command line data structure for the today action of newThing
+	TodayNewThingCommand struct {
 		PrettyPrint bool
 	}
 )
@@ -39,9 +39,9 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 		Use:   "today",
 		Short: `GET the new thing for the day`,
 	}
-	tmp1 := new(TodayNewCommand)
+	tmp1 := new(TodayNewThingCommand)
 	sub = &cobra.Command{
-		Use:   `new ["/new/thing/today"]`,
+		Use:   `new-thing ["/new/thing/today"]`,
 		Short: `Something new for you`,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp1.Run(c, args) },
 	}
@@ -204,8 +204,8 @@ func boolArray(ins []string) ([]bool, error) {
 	return vals, nil
 }
 
-// Run makes the HTTP request corresponding to the TodayNewCommand command.
-func (cmd *TodayNewCommand) Run(c *client.Client, args []string) error {
+// Run makes the HTTP request corresponding to the TodayNewThingCommand command.
+func (cmd *TodayNewThingCommand) Run(c *client.Client, args []string) error {
 	var path string
 	if len(args) > 0 {
 		path = args[0]
@@ -214,7 +214,7 @@ func (cmd *TodayNewCommand) Run(c *client.Client, args []string) error {
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
-	resp, err := c.TodayNew(ctx, path)
+	resp, err := c.TodayNewThing(ctx, path)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
 		return err
@@ -225,5 +225,5 @@ func (cmd *TodayNewCommand) Run(c *client.Client, args []string) error {
 }
 
 // RegisterFlags registers the command flags with the command line.
-func (cmd *TodayNewCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
+func (cmd *TodayNewThingCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 }

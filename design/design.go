@@ -12,7 +12,7 @@ var _ = API("Discovery", func() {
 	Scheme("http")
 })
 
-var _ = Resource("new", func() {
+var _ = Resource("newThing", func() {
 	Description("Something new for you")
 	DefaultMedia(NewThingMedia)
 	BasePath("/new/thing")

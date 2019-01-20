@@ -13,15 +13,15 @@ paths:
   /new/thing/today:
     get:
       description: GET the new thing for the day
-      operationId: new#today
+      operationId: newThing#today
       responses:
         "200":
           description: OK
       schemes:
       - http
-      summary: today new
+      summary: today newThing
       tags:
-      - new
+      - newThing
 produces:
 - application/json
 - application/xml

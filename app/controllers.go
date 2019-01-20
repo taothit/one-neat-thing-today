@@ -31,14 +31,14 @@ func initService(service *goa.Service) {
 	service.Decoder.Register(goa.NewJSONDecoder, "*/*")
 }
 
-// NewController is the controller interface for the New actions.
-type NewController interface {
+// NewThingController is the controller interface for the NewThing actions.
+type NewThingController interface {
 	goa.Muxer
-	Today(*TodayNewContext) error
+	Today(*TodayNewThingContext) error
 }
 
-// MountNewController "mounts" a New resource controller on the given service.
-func MountNewController(service *goa.Service, ctrl NewController) {
+// MountNewThingController "mounts" a NewThing resource controller on the given service.
+func MountNewThingController(service *goa.Service, ctrl NewThingController) {
 	initService(service)
 	var h goa.Handler
 
@@ -48,12 +48,12 @@ func MountNewController(service *goa.Service, ctrl NewController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewTodayNewContext(ctx, req, service)
+		rctx, err := NewTodayNewThingContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
 		return ctrl.Today(rctx)
 	}
 	service.Mux.Handle("GET", "/new/thing/today", ctrl.MuxHandler("today", h, nil))
-	service.LogInfo("mount", "ctrl", "New", "action", "Today", "route", "GET /new/thing/today")
+	service.LogInfo("mount", "ctrl", "NewThing", "action", "Today", "route", "GET /new/thing/today")
 }

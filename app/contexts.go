@@ -16,27 +16,27 @@ import (
 	"net/http"
 )
 
-// TodayNewContext provides the new today action context.
-type TodayNewContext struct {
+// TodayNewThingContext provides the newThing today action context.
+type TodayNewThingContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
 }
 
-// NewTodayNewContext parses the incoming request URL and body, performs validations and creates the
-// context used by the new controller today action.
-func NewTodayNewContext(ctx context.Context, r *http.Request, service *goa.Service) (*TodayNewContext, error) {
+// NewTodayNewThingContext parses the incoming request URL and body, performs validations and creates the
+// context used by the newThing controller today action.
+func NewTodayNewThingContext(ctx context.Context, r *http.Request, service *goa.Service) (*TodayNewThingContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
 	req.Request = r
-	rctx := TodayNewContext{Context: ctx, ResponseData: resp, RequestData: req}
+	rctx := TodayNewThingContext{Context: ctx, ResponseData: resp, RequestData: req}
 	return &rctx, err
 }
 
 // OK sends a HTTP response with status code 200.
-func (ctx *TodayNewContext) OK(resp []byte) error {
+func (ctx *TodayNewThingContext) OK(resp []byte) error {
 	if ctx.ResponseData.Header().Get("Content-Type") == "" {
 		ctx.ResponseData.Header().Set("Content-Type", "application/json")
 	}
