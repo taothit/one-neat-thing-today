@@ -1,0 +1,32 @@
+consumes:
+- application/json
+- application/xml
+- application/gob
+- application/x-gob
+host: localhost:8080
+info:
+  description: Discover something new each day by being given an item from a curated
+    list.
+  title: One new thing a day
+  version: ""
+paths:
+  /new/thing/today:
+    get:
+      description: GET the new thing for the day
+      operationId: new#today
+      responses:
+        "200":
+          description: OK
+      schemes:
+      - http
+      summary: today new
+      tags:
+      - new
+produces:
+- application/json
+- application/xml
+- application/gob
+- application/x-gob
+schemes:
+- http
+swagger: "2.0"
