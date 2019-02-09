@@ -4,8 +4,8 @@
 //
 // Command:
 // $ goagen
-// --design=douthitlab.edu/one-new-thing-today/design
-// --out=$(GOPATH)/src/douthitlab.edu/one-new-thing-today
+// --design=douthitlab.edu/one-neat-thing-today/design
+// --out=$(GOPATH)/src/douthitlab.edu/one-neat-thing-today
 // --version=v1.3.1
 
 package app
@@ -16,27 +16,27 @@ import (
 	"net/http"
 )
 
-// TodayNewThingContext provides the newThing today action context.
-type TodayNewThingContext struct {
+// TodayNeatThingContext provides the neatThing today action context.
+type TodayNeatThingContext struct {
 	context.Context
 	*goa.ResponseData
 	*goa.RequestData
 }
 
-// NewTodayNewThingContext parses the incoming request URL and body, performs validations and creates the
-// context used by the newThing controller today action.
-func NewTodayNewThingContext(ctx context.Context, r *http.Request, service *goa.Service) (*TodayNewThingContext, error) {
+// NewTodayNeatThingContext parses the incoming request URL and body, performs validations and creates the
+// context used by the neatThing controller today action.
+func NewTodayNeatThingContext(ctx context.Context, r *http.Request, service *goa.Service) (*TodayNeatThingContext, error) {
 	var err error
 	resp := goa.ContextResponse(ctx)
 	resp.Service = service
 	req := goa.ContextRequest(ctx)
 	req.Request = r
-	rctx := TodayNewThingContext{Context: ctx, ResponseData: resp, RequestData: req}
+	rctx := TodayNeatThingContext{Context: ctx, ResponseData: resp, RequestData: req}
 	return &rctx, err
 }
 
 // OK sends a HTTP response with status code 200.
-func (ctx *TodayNewThingContext) OK(r *NewThing) error {
+func (ctx *TodayNeatThingContext) OK(r *NeatThing) error {
 	if ctx.ResponseData.Header().Get("Content-Type") == "" {
 		ctx.ResponseData.Header().Set("Content-Type", "application/json")
 	}
@@ -44,7 +44,7 @@ func (ctx *TodayNewThingContext) OK(r *NewThing) error {
 }
 
 // OKFull sends a HTTP response with status code 200.
-func (ctx *TodayNewThingContext) OKFull(r *NewThingFull) error {
+func (ctx *TodayNeatThingContext) OKFull(r *NeatThingFull) error {
 	if ctx.ResponseData.Header().Get("Content-Type") == "" {
 		ctx.ResponseData.Header().Set("Content-Type", "application/json")
 	}
@@ -52,7 +52,7 @@ func (ctx *TodayNewThingContext) OKFull(r *NewThingFull) error {
 }
 
 // OKName sends a HTTP response with status code 200.
-func (ctx *TodayNewThingContext) OKName(r *NewThingName) error {
+func (ctx *TodayNeatThingContext) OKName(r *NeatThingName) error {
 	if ctx.ResponseData.Header().Get("Content-Type") == "" {
 		ctx.ResponseData.Header().Set("Content-Type", "application/json")
 	}
@@ -60,7 +60,7 @@ func (ctx *TodayNewThingContext) OKName(r *NewThingName) error {
 }
 
 // OKNameDefinition sends a HTTP response with status code 200.
-func (ctx *TodayNewThingContext) OKNameDefinition(r *NewThingNameDefinition) error {
+func (ctx *TodayNeatThingContext) OKNameDefinition(r *NeatThingNameDefinition) error {
 	if ctx.ResponseData.Header().Get("Content-Type") == "" {
 		ctx.ResponseData.Header().Set("Content-Type", "application/json")
 	}
@@ -68,7 +68,7 @@ func (ctx *TodayNewThingContext) OKNameDefinition(r *NewThingNameDefinition) err
 }
 
 // OKNameLink sends a HTTP response with status code 200.
-func (ctx *TodayNewThingContext) OKNameLink(r *NewThingNameLink) error {
+func (ctx *TodayNeatThingContext) OKNameLink(r *NeatThingNameLink) error {
 	if ctx.ResponseData.Header().Get("Content-Type") == "" {
 		ctx.ResponseData.Header().Set("Content-Type", "application/json")
 	}
