@@ -4,8 +4,8 @@
 //
 // Command:
 // $ goagen
-// --design=douthitlab.edu/one-new-thing-today/design
-// --out=$(GOPATH)/src/douthitlab.edu/one-new-thing-today
+// --design=douthitlab.edu/one-neat-thing-today/design
+// --out=$(GOPATH)/src/douthitlab.edu/one-neat-thing-today
 // --version=v1.3.1
 
 package client
@@ -15,92 +15,92 @@ import (
 	"time"
 )
 
-// NewThing media type (default view)
+// NeatThing media type (default view)
 //
-// Identifier: application/vnd.douthitlab.newthing; view=default
-type NewThing struct {
-	// What the new thing is
+// Identifier: application/vnd.douthitlab.neatthing; view=default
+type NeatThing struct {
+	// What the neat thing is
 	Definition *string `form:"definition,omitempty" json:"definition,omitempty" yaml:"definition,omitempty" xml:"definition,omitempty"`
-	// Illustrative link for the new thing
+	// Illustrative link for the neat thing
 	Link *string `form:"link,omitempty" json:"link,omitempty" yaml:"link,omitempty" xml:"link,omitempty"`
-	// The new thing
+	// The neat thing
 	Name *string `form:"name,omitempty" json:"name,omitempty" yaml:"name,omitempty" xml:"name,omitempty"`
 }
 
-// NewThing media type (full view)
+// NeatThing media type (full view)
 //
-// Identifier: application/vnd.douthitlab.newthing; view=full
-type NewThingFull struct {
+// Identifier: application/vnd.douthitlab.neatthing; view=full
+type NeatThingFull struct {
 	Bibliography []string `form:"bibliography,omitempty" json:"bibliography,omitempty" yaml:"bibliography,omitempty" xml:"bibliography,omitempty"`
-	// When this was a new thing
+	// When this was a neat thing
 	Date *time.Time `form:"date,omitempty" json:"date,omitempty" yaml:"date,omitempty" xml:"date,omitempty"`
-	// What the new thing is
+	// What the neat thing is
 	Definition *string `form:"definition,omitempty" json:"definition,omitempty" yaml:"definition,omitempty" xml:"definition,omitempty"`
-	// Illustrative link for the new thing
+	// Illustrative link for the neat thing
 	Link *string `form:"link,omitempty" json:"link,omitempty" yaml:"link,omitempty" xml:"link,omitempty"`
-	// The new thing
+	// The neat thing
 	Name *string `form:"name,omitempty" json:"name,omitempty" yaml:"name,omitempty" xml:"name,omitempty"`
 }
 
-// NewThing media type (name view)
+// NeatThing media type (name view)
 //
-// Identifier: application/vnd.douthitlab.newthing; view=name
-type NewThingName struct {
-	// The new thing
+// Identifier: application/vnd.douthitlab.neatthing; view=name
+type NeatThingName struct {
+	// The neat thing
 	Name *string `form:"name,omitempty" json:"name,omitempty" yaml:"name,omitempty" xml:"name,omitempty"`
 }
 
-// NewThing media type (name+definition view)
+// NeatThing media type (name+definition view)
 //
-// Identifier: application/vnd.douthitlab.newthing; view=name+definition
-type NewThingNameDefinition struct {
-	// What the new thing is
+// Identifier: application/vnd.douthitlab.neatthing; view=name+definition
+type NeatThingNameDefinition struct {
+	// What the neat thing is
 	Definition *string `form:"definition,omitempty" json:"definition,omitempty" yaml:"definition,omitempty" xml:"definition,omitempty"`
-	// The new thing
+	// The neat thing
 	Name *string `form:"name,omitempty" json:"name,omitempty" yaml:"name,omitempty" xml:"name,omitempty"`
 }
 
-// NewThing media type (name+link view)
+// NeatThing media type (name+link view)
 //
-// Identifier: application/vnd.douthitlab.newthing; view=name+link
-type NewThingNameLink struct {
-	// Illustrative link for the new thing
+// Identifier: application/vnd.douthitlab.neatthing; view=name+link
+type NeatThingNameLink struct {
+	// Illustrative link for the neat thing
 	Link *string `form:"link,omitempty" json:"link,omitempty" yaml:"link,omitempty" xml:"link,omitempty"`
-	// The new thing
+	// The neat thing
 	Name *string `form:"name,omitempty" json:"name,omitempty" yaml:"name,omitempty" xml:"name,omitempty"`
 }
 
-// DecodeNewThing decodes the NewThing instance encoded in resp body.
-func (c *Client) DecodeNewThing(resp *http.Response) (*NewThing, error) {
-	var decoded NewThing
+// DecodeNeatThing decodes the NeatThing instance encoded in resp body.
+func (c *Client) DecodeNeatThing(resp *http.Response) (*NeatThing, error) {
+	var decoded NeatThing
 	err := c.Decoder.Decode(&decoded, resp.Body, resp.Header.Get("Content-Type"))
 	return &decoded, err
 }
 
-// DecodeNewThingFull decodes the NewThingFull instance encoded in resp body.
-func (c *Client) DecodeNewThingFull(resp *http.Response) (*NewThingFull, error) {
-	var decoded NewThingFull
+// DecodeNeatThingFull decodes the NeatThingFull instance encoded in resp body.
+func (c *Client) DecodeNeatThingFull(resp *http.Response) (*NeatThingFull, error) {
+	var decoded NeatThingFull
 	err := c.Decoder.Decode(&decoded, resp.Body, resp.Header.Get("Content-Type"))
 	return &decoded, err
 }
 
-// DecodeNewThingName decodes the NewThingName instance encoded in resp body.
-func (c *Client) DecodeNewThingName(resp *http.Response) (*NewThingName, error) {
-	var decoded NewThingName
+// DecodeNeatThingName decodes the NeatThingName instance encoded in resp body.
+func (c *Client) DecodeNeatThingName(resp *http.Response) (*NeatThingName, error) {
+	var decoded NeatThingName
 	err := c.Decoder.Decode(&decoded, resp.Body, resp.Header.Get("Content-Type"))
 	return &decoded, err
 }
 
-// DecodeNewThingNameDefinition decodes the NewThingNameDefinition instance encoded in resp body.
-func (c *Client) DecodeNewThingNameDefinition(resp *http.Response) (*NewThingNameDefinition, error) {
-	var decoded NewThingNameDefinition
+// DecodeNeatThingNameDefinition decodes the NeatThingNameDefinition instance encoded in resp body.
+func (c *Client) DecodeNeatThingNameDefinition(resp *http.Response) (*NeatThingNameDefinition, error) {
+	var decoded NeatThingNameDefinition
 	err := c.Decoder.Decode(&decoded, resp.Body, resp.Header.Get("Content-Type"))
 	return &decoded, err
 }
 
-// DecodeNewThingNameLink decodes the NewThingNameLink instance encoded in resp body.
-func (c *Client) DecodeNewThingNameLink(resp *http.Response) (*NewThingNameLink, error) {
-	var decoded NewThingNameLink
+// DecodeNeatThingNameLink decodes the NeatThingNameLink instance encoded in resp body.
+func (c *Client) DecodeNeatThingNameLink(resp *http.Response) (*NeatThingNameLink, error) {
+	var decoded NeatThingNameLink
 	err := c.Decoder.Decode(&decoded, resp.Body, resp.Header.Get("Content-Type"))
 	return &decoded, err
 }

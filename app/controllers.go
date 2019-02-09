@@ -4,8 +4,8 @@
 //
 // Command:
 // $ goagen
-// --design=douthitlab.edu/one-new-thing-today/design
-// --out=$(GOPATH)/src/douthitlab.edu/one-new-thing-today
+// --design=douthitlab.edu/one-neat-thing-today/design
+// --out=$(GOPATH)/src/douthitlab.edu/one-neat-thing-today
 // --version=v1.3.1
 
 package app
@@ -32,14 +32,14 @@ func initService(service *goa.Service) {
 	service.Decoder.Register(goa.NewJSONDecoder, "*/*")
 }
 
-// NewThingController is the controller interface for the NewThing actions.
-type NewThingController interface {
+// NeatThingController is the controller interface for the NeatThing actions.
+type NeatThingController interface {
 	goa.Muxer
-	Today(*TodayNewThingContext) error
+	Today(*TodayNeatThingContext) error
 }
 
-// MountNewThingController "mounts" a NewThing resource controller on the given service.
-func MountNewThingController(service *goa.Service, ctrl NewThingController) {
+// MountNeatThingController "mounts" a NeatThing resource controller on the given service.
+func MountNeatThingController(service *goa.Service, ctrl NeatThingController) {
 	initService(service)
 	var h goa.Handler
 
@@ -49,14 +49,14 @@ func MountNewThingController(service *goa.Service, ctrl NewThingController) {
 			return err
 		}
 		// Build the context
-		rctx, err := NewTodayNewThingContext(ctx, req, service)
+		rctx, err := NewTodayNeatThingContext(ctx, req, service)
 		if err != nil {
 			return err
 		}
 		return ctrl.Today(rctx)
 	}
-	service.Mux.Handle("GET", "/new/thing/today", ctrl.MuxHandler("today", h, nil))
-	service.LogInfo("mount", "ctrl", "NewThing", "action", "Today", "route", "GET /new/thing/today")
+	service.Mux.Handle("GET", "/neat/thing/today", ctrl.MuxHandler("today", h, nil))
+	service.LogInfo("mount", "ctrl", "NeatThing", "action", "Today", "route", "GET /neat/thing/today")
 }
 
 // SwaggerController is the controller interface for the Swagger actions.

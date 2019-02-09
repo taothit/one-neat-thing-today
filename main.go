@@ -1,9 +1,9 @@
-//go:generate goagen bootstrap -d douthitlab.edu/one-new-thing-today/design
+//go:generate goagen bootstrap -d douthitlab.edu/one-neat-thing-today/design
 
 package main
 
 import (
-	"douthitlab.edu/one-new-thing-today/app"
+	"douthitlab.edu/one-neat-thing-today/app"
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa/middleware"
 )
@@ -18,12 +18,13 @@ func main() {
 	service.Use(middleware.ErrorHandler(service, true))
 	service.Use(middleware.Recover())
 
-	// Mount "new" controller
-	c := NewNewThingController(service)
-	app.MountNewThingController(service, c)
+	// Mount "neatThing" controller
+	c := NewNeatThingController(service)
+	app.MountNeatThingController(service, c)
+	// Mount "swagger" controller
+	c2 := NewSwaggerController(service)
+	app.MountSwaggerController(service, c2)
 
-	s := NewSwaggerController(service)
-	app.MountSwaggerController(service, s)
 	// Start service
 	if err := service.ListenAndServe(":8080"); err != nil {
 		service.LogError("startup", "err", err)

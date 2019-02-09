@@ -4,15 +4,15 @@
 //
 // Command:
 // $ goagen
-// --design=douthitlab.edu/one-new-thing-today/design
-// --out=$(GOPATH)/src/douthitlab.edu/one-new-thing-today
+// --design=douthitlab.edu/one-neat-thing-today/design
+// --out=$(GOPATH)/src/douthitlab.edu/one-neat-thing-today
 // --version=v1.3.1
 
 package cli
 
 import (
 	"context"
-	"douthitlab.edu/one-new-thing-today/client"
+	"douthitlab.edu/one-neat-thing-today/client"
 	"encoding/json"
 	"fmt"
 	"github.com/goadesign/goa"
@@ -27,8 +27,8 @@ import (
 )
 
 type (
-	// TodayNewThingCommand is the command line data structure for the today action of newThing
-	TodayNewThingCommand struct {
+	// TodayNeatThingCommand is the command line data structure for the today action of neatThing
+	TodayNeatThingCommand struct {
 		PrettyPrint bool
 	}
 
@@ -44,12 +44,12 @@ func RegisterCommands(app *cobra.Command, c *client.Client) {
 	var command, sub *cobra.Command
 	command = &cobra.Command{
 		Use:   "today",
-		Short: `GET the new thing for the day`,
+		Short: `GET the neat thing for the day`,
 	}
-	tmp1 := new(TodayNewThingCommand)
+	tmp1 := new(TodayNeatThingCommand)
 	sub = &cobra.Command{
-		Use:   `new-thing ["/new/thing/today"]`,
-		Short: `Something new for you`,
+		Use:   `neat-thing ["/neat/thing/today"]`,
+		Short: `Something neat for you`,
 		RunE:  func(cmd *cobra.Command, args []string) error { return tmp1.Run(c, args) },
 	}
 	tmp1.RegisterFlags(sub, c)
@@ -261,17 +261,17 @@ found:
 	return nil
 }
 
-// Run makes the HTTP request corresponding to the TodayNewThingCommand command.
-func (cmd *TodayNewThingCommand) Run(c *client.Client, args []string) error {
+// Run makes the HTTP request corresponding to the TodayNeatThingCommand command.
+func (cmd *TodayNeatThingCommand) Run(c *client.Client, args []string) error {
 	var path string
 	if len(args) > 0 {
 		path = args[0]
 	} else {
-		path = "/new/thing/today"
+		path = "/neat/thing/today"
 	}
 	logger := goa.NewLogger(log.New(os.Stderr, "", log.LstdFlags))
 	ctx := goa.WithLogger(context.Background(), logger)
-	resp, err := c.TodayNewThing(ctx, path)
+	resp, err := c.TodayNeatThing(ctx, path)
 	if err != nil {
 		goa.LogError(ctx, "failed", "err", err)
 		return err
@@ -282,5 +282,5 @@ func (cmd *TodayNewThingCommand) Run(c *client.Client, args []string) error {
 }
 
 // RegisterFlags registers the command flags with the command line.
-func (cmd *TodayNewThingCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
+func (cmd *TodayNeatThingCommand) RegisterFlags(cc *cobra.Command, c *client.Client) {
 }

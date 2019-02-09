@@ -4,50 +4,50 @@ consumes:
 - application/gob
 - application/x-gob
 definitions:
-  NewThing:
-    description: NewThing media type (default view)
+  NeatThing:
+    description: NeatThing media type (default view)
     example:
       definition: Enim explicabo rerum ducimus qui.
       link: Minus quae eum ut iste.
       name: Enim id voluptatem velit.
     properties:
       definition:
-        description: What the new thing is
+        description: What the neat thing is
         example: Enim explicabo rerum ducimus qui.
         type: string
       link:
-        description: Illustrative link for the new thing
+        description: Illustrative link for the neat thing
         example: Minus quae eum ut iste.
         type: string
       name:
-        description: The new thing
+        description: The neat thing
         example: Enim id voluptatem velit.
         type: string
-    title: 'Mediatype identifier: application/vnd.douthitlab.newthing; view=default'
+    title: 'Mediatype identifier: application/vnd.douthitlab.neatthing; view=default'
     type: object
 host: localhost:8080
 info:
-  description: Discover something new each day by being given an item from a curated
+  description: Discover something neat each day by being given an item from a curated
     list.
-  title: A new thing each day
+  title: A neat thing each day
   version: ""
 paths:
-  /new/thing/today:
+  /neat/thing/today:
     get:
-      description: GET the new thing for the day
-      operationId: newThing#today
+      description: GET the neat thing for the day
+      operationId: neatThing#today
       produces:
-      - application/vnd.douthitlab.newthing
+      - application/vnd.douthitlab.neatthing
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/NewThing'
+            $ref: '#/definitions/NeatThing'
       schemes:
       - http
-      summary: today newThing
+      summary: today neatThing
       tags:
-      - newThing
+      - neatThing
   /swagger.json:
     get:
       operationId: swagger#/swagger.json
