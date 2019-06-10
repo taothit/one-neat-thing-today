@@ -4,8 +4,8 @@
 //
 // Command:
 // $ goagen
-// --design=douthitlab.edu/one-neat-thing-today/design
-// --out=$(GOPATH)/src/douthitlab.edu/one-neat-thing-today
+// --design=ontt/design
+// --out=$(GOPATH)/src/ontt
 // --version=v1.3.1
 
 package test
@@ -13,7 +13,7 @@ package test
 import (
 	"bytes"
 	"context"
-	"douthitlab.edu/one-neat-thing-today/app"
+	"ontt/app"
 	"fmt"
 	"github.com/goadesign/goa"
 	"github.com/goadesign/goa/goatest"

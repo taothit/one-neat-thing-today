@@ -4,15 +4,15 @@
 //
 // Command:
 // $ goagen
-// --design=douthitlab.edu/one-neat-thing-today/design
-// --out=$(GOPATH)/src/douthitlab.edu/one-neat-thing-today
+// --design=ontt/design
+// --out=$(GOPATH)/src/ontt
 // --version=v1.3.1
 
 package cli
 
 import (
 	"context"
-	"douthitlab.edu/one-neat-thing-today/client"
+	"ontt/client"
 	"encoding/json"
 	"fmt"
 	"github.com/goadesign/goa"

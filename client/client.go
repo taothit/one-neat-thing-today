@@ -4,8 +4,8 @@
 //
 // Command:
 // $ goagen
-// --design=douthitlab.edu/one-neat-thing-today/design
-// --out=$(GOPATH)/src/douthitlab.edu/one-neat-thing-today
+// --design=ontt/design
+// --out=$(GOPATH)/src/ontt
 // --version=v1.3.1
 
 package client

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"douthitlab.edu/one-neat-thing-today/client"
-	"douthitlab.edu/one-neat-thing-today/tool/cli"
+	"ontt/client"
+	"ontt/tool/cli"
 	"fmt"
 	goaclient "github.com/goadesign/goa/client"
 	"github.com/spf13/cobra"

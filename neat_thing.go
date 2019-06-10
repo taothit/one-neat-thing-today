@@ -1,7 +1,7 @@
 package main
 
 import (
-	"douthitlab.edu/one-neat-thing-today/app"
+	"ontt/app"
 	"github.com/goadesign/goa"
 )
 
