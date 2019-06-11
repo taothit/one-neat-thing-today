@@ -8,7 +8,7 @@ import (
 
     "github.com/goadesign/goa"
     "github.com/goadesign/goa/middleware"
-    "ontt/app"
+    "github.com/taothit/one-neat-thing-today/app"
 )
 
 var port = flag.String("port", "8080", "port service listens on")

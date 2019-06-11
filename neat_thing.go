@@ -1,8 +1,8 @@
 package main
 
 import (
-	"ontt/app"
 	"github.com/goadesign/goa"
+	"github.com/taothit/one-neat-thing-today/app"
 )
 
 // NeatThingController implements the neatThing resource.
@@ -17,11 +17,10 @@ func NewNeatThingController(service *goa.Service) *NeatThingController {
 
 // Today runs the today action.
 func (c *NeatThingController) Today(ctx *app.TodayNeatThingContext) error {
-	// NeatThingController_Today: start_implement
-
-	// Put your logic here
 
 	res := &app.NeatThing{}
+	
+
+
 	return ctx.OK(res)
-	// NeatThingController_Today: end_implement
 }

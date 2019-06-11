@@ -1,4 +1,4 @@
-module ontt
+module github.com/taothit/one-neat-thing-today
 
 go 1.12
 
