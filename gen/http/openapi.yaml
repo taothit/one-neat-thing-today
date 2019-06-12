@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
-  title: Calculator Service
-  description: Service for adding numbers, a Goa teaser
+  title: One-new-thing-today
+  description: Discover one new thing a day.
   version: ""
 host: localhost:8000
 consumes:
@@ -13,35 +13,23 @@ produces:
 - application/xml
 - application/gob
 paths:
-  /add/{a}/{b}:
+  /neat/thing/today:
     get:
       tags:
-      - calc
-      summary: add calc
-      operationId: calc#add
-      parameters:
-      - name: a
-        in: path
-        description: Left operand
-        required: true
-        type: integer
-      - name: b
-        in: path
-        description: Right operand
-        required: true
-        type: integer
+      - neatThing
+      summary: neatThingToday neatThing
+      operationId: neatThing#neatThingToday
       responses:
-        "200":
-          description: OK response.
+        "204":
+          description: No Content response.
           schema:
-            type: integer
-            format: int64
+            $ref: '#/definitions/NeatThingNeatThingTodayResponseBody'
       schemes:
       - http
   /openapi.json:
     get:
       summary: Download ../../gen/http/openapi.json
-      operationId: calc#/openapi.json
+      operationId: neatThing#/openapi.json
       responses:
         "200":
           description: File downloaded
@@ -49,3 +37,43 @@ paths:
             type: file
       schemes:
       - http
+definitions:
+  NeatThingNeatThingTodayResponseBody:
+    title: NeatThingNeatThingTodayResponseBody
+    type: object
+    properties:
+      bibliography:
+        type: array
+        items:
+          type: string
+          example: Dolorem rerum.
+        example:
+        - Tempora et velit.
+        - Quaerat et et.
+        - Maiores quod pariatur.
+      date:
+        type: string
+        description: When this was a neat thing
+        example: "1973-02-12T22:42:29Z"
+        format: date-time
+      definition:
+        type: string
+        description: What the neat thing is
+        example: Ratione voluptatem.
+      link:
+        type: string
+        description: Illustrative link for the neat thing
+        example: http://wuckerthettinger.com/carmel
+        format: uri
+      name:
+        type: string
+        description: The neat thing
+        example: Quia sed odio voluptatem unde commodi doloribus.
+    example:
+      bibliography:
+      - Dolore magni.
+      - Distinctio quam quisquam dolore temporibus.
+      date: "2010-03-05T05:22:24Z"
+      definition: Aliquam sed illo accusantium tenetur dolorem voluptas.
+      link: http://wisoky.biz/marguerite
+      name: Libero nostrum sit ut optio debitis.
