@@ -1,47 +1,49 @@
 package design
 
 import (
-	. "github.com/goadesign/goa/design"
-	. "github.com/goadesign/goa/design/apidsl"
+	. "goa.design/goa/v3/dsl"
 )
 
-var _ = API("Discovery", func() {
-	Title("A neat thing each day")
-	Description("Discover something neat each day by being given an item from a curated list.")
-	Host("localhost:8080")
-	Scheme("http")
-})
-
-var _ = Resource("neatThing", func() {
-	Description("Something neat for you")
-	DefaultMedia(NeatThingMedia)
-	BasePath("/neat/thing")
-	Action("today", func() {
-		Routing(GET("today"))
-		Description("GET the neat thing for the day")
-		Response(OK, NeatThingMedia)
+var _ = API("discover", func() {
+	Title("One-new-thing-today")
+	Description("Discover one new thing a day.")
+	Server("discoverysvr", func() {
+		Services("neatThing")
+		Host("localhost", func() {
+			URI("http://localhost:8000")
+			URI("grpc://localhost:8080")
+		})
 	})
 })
 
-var _ = Resource("swagger", func() {
-	Origin("*", func() {
-		Methods("GET")
+var _ = Service("neatThing", func() {
+	Description("Allows access to discover neat things.")
+
+	Method("neatThingToday", func() {
+		HTTP(func() {
+			GET("/neat/thing/today")
+		})
+
+		Result(NeatThingMedia)
 	})
-	Files("/swagger.json", "swagger/swagger.json")
+
+	Files("/openapi.json", "../../gen/http/openapi.json")
 })
 
 // NeatThingMedia represents a neat thing with its name, description/definition,
 // and a great illustrative link.
-var NeatThingMedia = MediaType("application/vnd.douthitlab.neatthing", func() {
+var NeatThingMedia = Type("application/vnd.douthitlab.neatthing", func() {
 	TypeName("NeatThing")
-	ContentType("application/json")
-	Attributes(func() {
-		Attribute("name", String, "The neat thing")
-		Attribute("definition", String, "What the neat thing is")
-		Attribute("link", String, "Illustrative link for the neat thing")
-		Attribute("date", DateTime, "When this was a neat thing")
-		Attribute("bibliography", ArrayOf(String))
+	Field(1, "name", String, "The neat thing")
+	Field(2, "definition", String, "What the neat thing is")
+	Field(3, "link", String, "Illustrative link for the neat thing", func() {
+		Format(FormatURI)
 	})
+	Field(4, "date", String, "When this was a neat thing", func() {
+		Format(FormatDateTime)
+	})
+	Field(5, "bibliography", ArrayOf(String))
+
 	View("default", func() {
 		Attribute("name")
 		Attribute("definition")
