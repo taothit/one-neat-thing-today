@@ -1,4 +1,4 @@
-# one-neat-thing-today
+# one-neat-thing-today [![Build Status](https://travis-ci.org/taothit/one-neat-thing-today.svg?branch=master)](https://travis-ci.org/taothit/one-neat-thing-today)
 Daily provider for an interesting concept, term, event, or idea.
 _____
 ## Command-line Tool
