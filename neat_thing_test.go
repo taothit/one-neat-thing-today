@@ -114,5 +114,4 @@ func TestNeatThingsrvc_NewNeatThing(t *testing.T) {
 			t.Errorf("NewNeatThing(%s)=%s; got=[nt=%s|view=%s]; err=%v", want, want, got, view, err)
 		}
 	}
-
 }
