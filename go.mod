@@ -5,7 +5,7 @@ go 1.12
 require (
 	code.soquee.net/testlog v0.0.1
 	github.com/armon/go-metrics v0.0.0-20190430140413-ec5e00d3c878 // indirect
-	github.com/boltdb/bolt v1.3.1
+	github.com/etcd-io/bbolt v1.3.3
 	github.com/goadesign/goa v2.0.0+incompatible
 	github.com/gofrs/uuid v3.2.0+incompatible // indirect
 	github.com/golang/protobuf v1.3.1

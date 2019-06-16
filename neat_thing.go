@@ -8,8 +8,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/boltdb/bolt"
-
+	bolt "github.com/etcd-io/bbolt"
 	neatthing "github.com/taothit/one-neat-thing-today/gen/neat_thing"
 )
 

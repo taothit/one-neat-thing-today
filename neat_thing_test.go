@@ -11,7 +11,7 @@ import (
 	"time"
 
 	"code.soquee.net/testlog"
-	"github.com/boltdb/bolt"
+	bolt "github.com/etcd-io/bbolt"
 	"github.com/google/go-cmp/cmp"
 	discover "github.com/taothit/one-neat-thing-today"
 	neatthing "github.com/taothit/one-neat-thing-today/gen/neat_thing"
