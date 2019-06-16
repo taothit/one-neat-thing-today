@@ -11,3 +11,8 @@ package client
 func NeatThingTodayNeatThingPath() string {
 	return "/neat/thing/today"
 }
+
+// NewNeatThingNeatThingPath returns the URL path to the neatThing service newNeatThing HTTP endpoint.
+func NewNeatThingNeatThingPath() string {
+	return "/neat/thing"
+}

@@ -14,6 +14,8 @@ import (
 	"net/http"
 	"net/url"
 
+	neatthing "github.com/taothit/one-neat-thing-today/gen/neat_thing"
+	neatthingviews "github.com/taothit/one-neat-thing-today/gen/neat_thing/views"
 	goahttp "goa.design/goa/v3/http"
 )
 
@@ -59,15 +61,90 @@ func DecodeNeatThingTodayResponse(decoder func(*http.Response) goahttp.Decoder, 
 			if err != nil {
 				return nil, goahttp.ErrDecodingError("neatThing", "neatThingToday", err)
 			}
-			err = ValidateNeatThingTodayResponseBody(&body)
-			if err != nil {
+			p := NewNeatThingTodayNeatThingNoContent(&body)
+			view := resp.Header.Get("goa-view")
+			vres := &neatthingviews.NeatThing{p, view}
+			if err = neatthingviews.ValidateNeatThing(vres); err != nil {
 				return nil, goahttp.ErrValidationError("neatThing", "neatThingToday", err)
 			}
-			res := NewNeatThingTodayNeatThingNoContent(&body)
+			res := neatthing.NewNeatThing(vres)
 			return res, nil
 		default:
 			body, _ := ioutil.ReadAll(resp.Body)
 			return nil, goahttp.ErrInvalidResponse("neatThing", "neatThingToday", resp.StatusCode, string(body))
+		}
+	}
+}
+
+// BuildNewNeatThingRequest instantiates a HTTP request object with method and
+// path set to call the "neatThing" service "newNeatThing" endpoint
+func (c *Client) BuildNewNeatThingRequest(ctx context.Context, v interface{}) (*http.Request, error) {
+	u := &url.URL{Scheme: c.scheme, Host: c.host, Path: NewNeatThingNeatThingPath()}
+	req, err := http.NewRequest("POST", u.String(), nil)
+	if err != nil {
+		return nil, goahttp.ErrInvalidURL("neatThing", "newNeatThing", u.String(), err)
+	}
+	if ctx != nil {
+		req = req.WithContext(ctx)
+	}
+
+	return req, nil
+}
+
+// EncodeNewNeatThingRequest returns an encoder for requests sent to the
+// neatThing newNeatThing server.
+func EncodeNewNeatThingRequest(encoder func(*http.Request) goahttp.Encoder) func(*http.Request, interface{}) error {
+	return func(req *http.Request, v interface{}) error {
+		p, ok := v.(*neatthing.NeatThing)
+		if !ok {
+			return goahttp.ErrInvalidType("neatThing", "newNeatThing", "*neatthing.NeatThing", v)
+		}
+		body := NewNewNeatThingRequestBody(p)
+		if err := encoder(req).Encode(&body); err != nil {
+			return goahttp.ErrEncodingError("neatThing", "newNeatThing", err)
+		}
+		return nil
+	}
+}
+
+// DecodeNewNeatThingResponse returns a decoder for responses returned by the
+// neatThing newNeatThing endpoint. restoreBody controls whether the response
+// body should be restored after having been read.
+func DecodeNewNeatThingResponse(decoder func(*http.Response) goahttp.Decoder, restoreBody bool) func(*http.Response) (interface{}, error) {
+	return func(resp *http.Response) (interface{}, error) {
+		if restoreBody {
+			b, err := ioutil.ReadAll(resp.Body)
+			if err != nil {
+				return nil, err
+			}
+			resp.Body = ioutil.NopCloser(bytes.NewBuffer(b))
+			defer func() {
+				resp.Body = ioutil.NopCloser(bytes.NewBuffer(b))
+			}()
+		} else {
+			defer resp.Body.Close()
+		}
+		switch resp.StatusCode {
+		case http.StatusOK:
+			var (
+				body NewNeatThingResponseBody
+				err  error
+			)
+			err = decoder(resp).Decode(&body)
+			if err != nil {
+				return nil, goahttp.ErrDecodingError("neatThing", "newNeatThing", err)
+			}
+			p := NewNewNeatThingNeatThingOK(&body)
+			view := resp.Header.Get("goa-view")
+			vres := &neatthingviews.NeatThing{p, view}
+			if err = neatthingviews.ValidateNeatThing(vres); err != nil {
+				return nil, goahttp.ErrValidationError("neatThing", "newNeatThing", err)
+			}
+			res := neatthing.NewNeatThing(vres)
+			return res, nil
+		default:
+			body, _ := ioutil.ReadAll(resp.Body)
+			return nil, goahttp.ErrInvalidResponse("neatThing", "newNeatThing", resp.StatusCode, string(body))
 		}
 	}
 }

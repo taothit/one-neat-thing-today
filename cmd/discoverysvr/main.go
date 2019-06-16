@@ -40,7 +40,7 @@ func main() {
 		neatThingSvc neatthing.Service
 	)
 	{
-		neatThingSvc = discover.NewNeatThing(logger)
+		neatThingSvc = discover.NewNeatThing(logger, nil)
 	}
 
 	// Wrap the services in endpoints that can be invoked from other services
