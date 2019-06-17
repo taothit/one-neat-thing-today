@@ -6,3 +6,36 @@
 // $ goa gen github.com/taothit/one-neat-thing-today/design
 
 package client
+
+import (
+	"encoding/json"
+	"fmt"
+
+	neatthing "github.com/taothit/one-neat-thing-today/gen/neat_thing"
+)
+
+// BuildNewNeatThingPayload builds the payload for the neatThing newNeatThing
+// endpoint from CLI flags.
+func BuildNewNeatThingPayload(neatThingNewNeatThingBody string) (*neatthing.NeatThing, error) {
+	var err error
+	var body NewNeatThingRequestBody
+	{
+		err = json.Unmarshal([]byte(neatThingNewNeatThingBody), &body)
+		if err != nil {
+			return nil, fmt.Errorf("invalid JSON for body, example of valid JSON:\n%s", "'{\n      \"bibliography\": [\n         \"Ducimus qui nulla facere magnam veritatis deserunt.\",\n         \"Ducimus rerum.\",\n         \"Ratione velit cum ut sed.\"\n      ],\n      \"date\": \"1974-08-28T15:10:12Z\",\n      \"definition\": \"Iste ut ipsa voluptas.\",\n      \"link\": \"http://greenbogan.info/jadyn\",\n      \"name\": \"Et eum sed.\"\n   }'")
+		}
+	}
+	v := &neatthing.NeatThing{
+		Name:       body.Name,
+		Definition: body.Definition,
+		Link:       body.Link,
+		Date:       body.Date,
+	}
+	if body.Bibliography != nil {
+		v.Bibliography = make([]string, len(body.Bibliography))
+		for i, val := range body.Bibliography {
+			v.Bibliography[i] = val
+		}
+	}
+	return v, nil
+}

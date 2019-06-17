@@ -1,7 +1,7 @@
 package design
 
 import (
-	. "goa.design/goa/v3/dsl"
+	. "goa.design/goa/v3/dsl" // nolint
 )
 
 var _ = API("discover", func() {
@@ -27,22 +27,35 @@ var _ = Service("neatThing", func() {
 		Result(NeatThingMedia)
 	})
 
+	Method("newNeatThing", func() {
+		HTTP(func() {
+			POST("/neat/thing")
+		})
+
+		Payload(NeatThingMedia)
+		Result(NeatThingMedia, func() {
+			View("full")
+		})
+	})
+
 	Files("/openapi.json", "../../gen/http/openapi.json")
 })
 
 // NeatThingMedia represents a neat thing with its name, description/definition,
 // and a great illustrative link.
-var NeatThingMedia = Type("application/vnd.douthitlab.neatthing", func() {
+var NeatThingMedia = ResultType("application/vnd.douthitlab.neatthing", func() {
 	TypeName("NeatThing")
-	Field(1, "name", String, "The neat thing")
-	Field(2, "definition", String, "What the neat thing is")
-	Field(3, "link", String, "Illustrative link for the neat thing", func() {
-		Format(FormatURI)
+	Attributes(func() {
+		Field(1, "name", String, "The neat thing")
+		Field(2, "definition", String, "What the neat thing is")
+		Field(3, "link", String, "Illustrative link for the neat thing", func() {
+			Format(FormatURI)
+		})
+		Field(4, "date", String, "When this was a neat thing", func() {
+			Format(FormatDateTime)
+		})
+		Field(5, "bibliography", ArrayOf(String))
 	})
-	Field(4, "date", String, "When this was a neat thing", func() {
-		Format(FormatDateTime)
-	})
-	Field(5, "bibliography", ArrayOf(String))
 
 	View("default", func() {
 		Attribute("name")

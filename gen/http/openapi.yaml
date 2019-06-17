@@ -13,6 +13,25 @@ produces:
 - application/xml
 - application/gob
 paths:
+  /neat/thing:
+    post:
+      tags:
+      - neatThing
+      summary: newNeatThing neatThing
+      operationId: neatThing#newNeatThing
+      parameters:
+      - name: NewNeatThingRequestBody
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/NeatThingNewNeatThingRequestBody'
+      responses:
+        "200":
+          description: OK response.
+          schema:
+            $ref: '#/definitions/NeatThingNewNeatThingResponseBodyFull'
+      schemes:
+      - http
   /neat/thing/today:
     get:
       tags:
@@ -39,41 +58,107 @@ paths:
       - http
 definitions:
   NeatThingNeatThingTodayResponseBody:
-    title: NeatThingNeatThingTodayResponseBody
+    title: 'Mediatype identifier: application/vnd.douthitlab.neatthing; view=default'
+    type: object
+    properties:
+      definition:
+        type: string
+        description: What the neat thing is
+        example: Et unde quidem in.
+      link:
+        type: string
+        description: Illustrative link for the neat thing
+        example: http://kovacekharvey.net/maverick_rau
+        format: uri
+      name:
+        type: string
+        description: The neat thing
+        example: Ut est voluptatem laborum.
+    description: NeatThingTodayResponseBody result type (default view)
+    example:
+      definition: Dolor sint aliquam.
+      link: http://hoegercormier.biz/sim
+      name: Eius incidunt voluptatem nisi ullam iste.
+  NeatThingNewNeatThingRequestBody:
+    title: NeatThingNewNeatThingRequestBody
     type: object
     properties:
       bibliography:
         type: array
         items:
           type: string
-          example: Dolorem rerum.
+          example: Veniam in officia officia nobis.
         example:
-        - Tempora et velit.
-        - Quaerat et et.
-        - Maiores quod pariatur.
+        - Beatae quisquam id sequi facilis.
+        - Nulla dolorum enim tenetur eius.
+        - Totam occaecati consequatur commodi ea aut numquam.
       date:
         type: string
         description: When this was a neat thing
-        example: "1973-02-12T22:42:29Z"
+        example: "1998-09-28T03:01:52Z"
         format: date-time
       definition:
         type: string
         description: What the neat thing is
-        example: Ratione voluptatem.
+        example: Provident qui rerum voluptates non et.
       link:
         type: string
         description: Illustrative link for the neat thing
-        example: http://wuckerthettinger.com/carmel
+        example: http://walker.name/jaylon
         format: uri
       name:
         type: string
         description: The neat thing
-        example: Quia sed odio voluptatem unde commodi doloribus.
+        example: Deleniti repudiandae fugit itaque consequatur deserunt libero.
     example:
       bibliography:
-      - Dolore magni.
-      - Distinctio quam quisquam dolore temporibus.
-      date: "2010-03-05T05:22:24Z"
-      definition: Aliquam sed illo accusantium tenetur dolorem voluptas.
-      link: http://wisoky.biz/marguerite
-      name: Libero nostrum sit ut optio debitis.
+      - Perspiciatis officiis sapiente odio non aut alias.
+      - Maxime minus dolore sunt tenetur aut.
+      - Modi nam.
+      date: "1974-12-02T11:14:50Z"
+      definition: Ullam fugiat quo.
+      link: http://fadelschoen.biz/pierce
+      name: Ut quas at.
+  NeatThingNewNeatThingResponseBodyFull:
+    title: 'Mediatype identifier: application/vnd.douthitlab.neatthing; view=full'
+    type: object
+    properties:
+      bibliography:
+        type: array
+        items:
+          type: string
+          example: Rerum iure illum voluptatibus.
+        example:
+        - Ea aliquam suscipit qui fugiat.
+        - Autem quasi voluptas labore qui sed.
+        - Delectus quia.
+        - Voluptatum consectetur.
+      date:
+        type: string
+        description: When this was a neat thing
+        example: "2003-10-19T19:27:43Z"
+        format: date-time
+      definition:
+        type: string
+        description: What the neat thing is
+        example: Qui voluptates itaque dolorem.
+      link:
+        type: string
+        description: Illustrative link for the neat thing
+        example: http://muller.biz/ewald
+        format: uri
+      name:
+        type: string
+        description: The neat thing
+        example: Sit quibusdam quia qui.
+    description: NewNeatThingResponseBody result type (full view) (default view)
+    example:
+      bibliography:
+      - Aut et.
+      - Hic qui fuga voluptas.
+      - Ex est consequatur quasi unde magni.
+      - A doloremque.
+      date: "1991-07-19T15:44:12Z"
+      definition: Velit consectetur.
+      link: http://corwinlabadie.name/alexa_wolf
+      name: Ducimus adipisci.

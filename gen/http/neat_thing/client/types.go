@@ -9,8 +9,22 @@ package client
 
 import (
 	neatthing "github.com/taothit/one-neat-thing-today/gen/neat_thing"
-	goa "goa.design/goa/v3/pkg"
+	neatthingviews "github.com/taothit/one-neat-thing-today/gen/neat_thing/views"
 )
+
+// NewNeatThingRequestBody is the type of the "neatThing" service
+// "newNeatThing" endpoint HTTP request body.
+type NewNeatThingRequestBody struct {
+	// The neat thing
+	Name *string `form:"name,omitempty" json:"name,omitempty" xml:"name,omitempty"`
+	// What the neat thing is
+	Definition *string `form:"definition,omitempty" json:"definition,omitempty" xml:"definition,omitempty"`
+	// Illustrative link for the neat thing
+	Link *string `form:"link,omitempty" json:"link,omitempty" xml:"link,omitempty"`
+	// When this was a neat thing
+	Date         *string  `form:"date,omitempty" json:"date,omitempty" xml:"date,omitempty"`
+	Bibliography []string `form:"bibliography,omitempty" json:"bibliography,omitempty" xml:"bibliography,omitempty"`
+}
 
 // NeatThingTodayResponseBody is the type of the "neatThing" service
 // "neatThingToday" endpoint HTTP response body.
@@ -26,10 +40,42 @@ type NeatThingTodayResponseBody struct {
 	Bibliography []string `form:"bibliography,omitempty" json:"bibliography,omitempty" xml:"bibliography,omitempty"`
 }
 
+// NewNeatThingResponseBody is the type of the "neatThing" service
+// "newNeatThing" endpoint HTTP response body.
+type NewNeatThingResponseBody struct {
+	// The neat thing
+	Name *string `form:"name,omitempty" json:"name,omitempty" xml:"name,omitempty"`
+	// What the neat thing is
+	Definition *string `form:"definition,omitempty" json:"definition,omitempty" xml:"definition,omitempty"`
+	// Illustrative link for the neat thing
+	Link *string `form:"link,omitempty" json:"link,omitempty" xml:"link,omitempty"`
+	// When this was a neat thing
+	Date         *string  `form:"date,omitempty" json:"date,omitempty" xml:"date,omitempty"`
+	Bibliography []string `form:"bibliography,omitempty" json:"bibliography,omitempty" xml:"bibliography,omitempty"`
+}
+
+// NewNewNeatThingRequestBody builds the HTTP request body from the payload of
+// the "newNeatThing" endpoint of the "neatThing" service.
+func NewNewNeatThingRequestBody(p *neatthing.NeatThing) *NewNeatThingRequestBody {
+	body := &NewNeatThingRequestBody{
+		Name:       p.Name,
+		Definition: p.Definition,
+		Link:       p.Link,
+		Date:       p.Date,
+	}
+	if p.Bibliography != nil {
+		body.Bibliography = make([]string, len(p.Bibliography))
+		for i, val := range p.Bibliography {
+			body.Bibliography[i] = val
+		}
+	}
+	return body
+}
+
 // NewNeatThingTodayNeatThingNoContent builds a "neatThing" service
 // "neatThingToday" endpoint result from a HTTP "NoContent" response.
-func NewNeatThingTodayNeatThingNoContent(body *NeatThingTodayResponseBody) *neatthing.NeatThing {
-	v := &neatthing.NeatThing{
+func NewNeatThingTodayNeatThingNoContent(body *NeatThingTodayResponseBody) *neatthingviews.NeatThingView {
+	v := &neatthingviews.NeatThingView{
 		Name:       body.Name,
 		Definition: body.Definition,
 		Link:       body.Link,
@@ -44,14 +90,20 @@ func NewNeatThingTodayNeatThingNoContent(body *NeatThingTodayResponseBody) *neat
 	return v
 }
 
-// ValidateNeatThingTodayResponseBody runs the validations defined on
-// NeatThingTodayResponseBody
-func ValidateNeatThingTodayResponseBody(body *NeatThingTodayResponseBody) (err error) {
-	if body.Link != nil {
-		err = goa.MergeErrors(err, goa.ValidateFormat("body.link", *body.Link, goa.FormatURI))
+// NewNewNeatThingNeatThingOK builds a "neatThing" service "newNeatThing"
+// endpoint result from a HTTP "OK" response.
+func NewNewNeatThingNeatThingOK(body *NewNeatThingResponseBody) *neatthingviews.NeatThingView {
+	v := &neatthingviews.NeatThingView{
+		Name:       body.Name,
+		Definition: body.Definition,
+		Link:       body.Link,
+		Date:       body.Date,
 	}
-	if body.Date != nil {
-		err = goa.MergeErrors(err, goa.ValidateFormat("body.date", *body.Date, goa.FormatDateTime))
+	if body.Bibliography != nil {
+		v.Bibliography = make([]string, len(body.Bibliography))
+		for i, val := range body.Bibliography {
+			v.Bibliography[i] = val
+		}
 	}
-	return
+	return v
 }

@@ -16,12 +16,14 @@ import (
 // Client is the "neatThing" service client.
 type Client struct {
 	NeatThingTodayEndpoint goa.Endpoint
+	NewNeatThingEndpoint   goa.Endpoint
 }
 
 // NewClient initializes a "neatThing" service client given the endpoints.
-func NewClient(neatThingToday goa.Endpoint) *Client {
+func NewClient(neatThingToday, newNeatThing goa.Endpoint) *Client {
 	return &Client{
 		NeatThingTodayEndpoint: neatThingToday,
+		NewNeatThingEndpoint:   newNeatThing,
 	}
 }
 
@@ -30,6 +32,16 @@ func NewClient(neatThingToday goa.Endpoint) *Client {
 func (c *Client) NeatThingToday(ctx context.Context) (res *NeatThing, err error) {
 	var ires interface{}
 	ires, err = c.NeatThingTodayEndpoint(ctx, nil)
+	if err != nil {
+		return
+	}
+	return ires.(*NeatThing), nil
+}
+
+// NewNeatThing calls the "newNeatThing" endpoint of the "neatThing" service.
+func (c *Client) NewNeatThing(ctx context.Context, p *NeatThing) (res *NeatThing, err error) {
+	var ires interface{}
+	ires, err = c.NewNeatThingEndpoint(ctx, p)
 	if err != nil {
 		return
 	}

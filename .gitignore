@@ -2,3 +2,5 @@
 *.iml
 *DS_STORE
 one-neat-thing-today
+*discoverysvr*
+*.db

@@ -23,7 +23,7 @@ import (
 //    command (subcommand1|subcommand2|...)
 //
 func UsageCommands() string {
-	return `neat-thing neat-thing-today
+	return `neat-thing (neat-thing-today|new-neat-thing)
 `
 }
 
@@ -46,9 +46,13 @@ func ParseEndpoint(
 		neatThingFlags = flag.NewFlagSet("neat-thing", flag.ContinueOnError)
 
 		neatThingNeatThingTodayFlags = flag.NewFlagSet("neat-thing-today", flag.ExitOnError)
+
+		neatThingNewNeatThingFlags    = flag.NewFlagSet("new-neat-thing", flag.ExitOnError)
+		neatThingNewNeatThingBodyFlag = neatThingNewNeatThingFlags.String("body", "REQUIRED", "")
 	)
 	neatThingFlags.Usage = neatThingUsage
 	neatThingNeatThingTodayFlags.Usage = neatThingNeatThingTodayUsage
+	neatThingNewNeatThingFlags.Usage = neatThingNewNeatThingUsage
 
 	if err := flag.CommandLine.Parse(os.Args[1:]); err != nil {
 		return nil, nil, err
@@ -87,6 +91,9 @@ func ParseEndpoint(
 			case "neat-thing-today":
 				epf = neatThingNeatThingTodayFlags
 
+			case "new-neat-thing":
+				epf = neatThingNewNeatThingFlags
+
 			}
 
 		}
@@ -115,6 +122,9 @@ func ParseEndpoint(
 			case "neat-thing-today":
 				endpoint = c.NeatThingToday()
 				data = nil
+			case "new-neat-thing":
+				endpoint = c.NewNeatThing()
+				data, err = neatthingc.BuildNewNeatThingPayload(*neatThingNewNeatThingBodyFlag)
 			}
 		}
 	}
@@ -134,6 +144,7 @@ Usage:
 
 COMMAND:
     neat-thing-today: NeatThingToday implements neatThingToday.
+    new-neat-thing: NewNeatThing implements newNeatThing.
 
 Additional help:
     %s neat-thing COMMAND --help
@@ -146,5 +157,26 @@ NeatThingToday implements neatThingToday.
 
 Example:
     `+os.Args[0]+` neat-thing neat-thing-today
+`, os.Args[0])
+}
+
+func neatThingNewNeatThingUsage() {
+	fmt.Fprintf(os.Stderr, `%s [flags] neat-thing new-neat-thing -body JSON
+
+NewNeatThing implements newNeatThing.
+    -body JSON: 
+
+Example:
+    `+os.Args[0]+` neat-thing new-neat-thing --body '{
+      "bibliography": [
+         "Ducimus qui nulla facere magnam veritatis deserunt.",
+         "Ducimus rerum.",
+         "Ratione velit cum ut sed."
+      ],
+      "date": "1974-08-28T15:10:12Z",
+      "definition": "Iste ut ipsa voluptas.",
+      "link": "http://greenbogan.info/jadyn",
+      "name": "Et eum sed."
+   }'
 `, os.Args[0])
 }

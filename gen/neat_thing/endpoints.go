@@ -16,24 +16,46 @@ import (
 // Endpoints wraps the "neatThing" service endpoints.
 type Endpoints struct {
 	NeatThingToday goa.Endpoint
+	NewNeatThing   goa.Endpoint
 }
 
 // NewEndpoints wraps the methods of the "neatThing" service with endpoints.
 func NewEndpoints(s Service) *Endpoints {
 	return &Endpoints{
 		NeatThingToday: NewNeatThingTodayEndpoint(s),
+		NewNeatThing:   NewNewNeatThingEndpoint(s),
 	}
 }
 
 // Use applies the given middleware to all the "neatThing" service endpoints.
 func (e *Endpoints) Use(m func(goa.Endpoint) goa.Endpoint) {
 	e.NeatThingToday = m(e.NeatThingToday)
+	e.NewNeatThing = m(e.NewNeatThing)
 }
 
 // NewNeatThingTodayEndpoint returns an endpoint function that calls the method
 // "neatThingToday" of service "neatThing".
 func NewNeatThingTodayEndpoint(s Service) goa.Endpoint {
 	return func(ctx context.Context, req interface{}) (interface{}, error) {
-		return s.NeatThingToday(ctx)
+		res, view, err := s.NeatThingToday(ctx)
+		if err != nil {
+			return nil, err
+		}
+		vres := NewViewedNeatThing(res, view)
+		return vres, nil
+	}
+}
+
+// NewNewNeatThingEndpoint returns an endpoint function that calls the method
+// "newNeatThing" of service "neatThing".
+func NewNewNeatThingEndpoint(s Service) goa.Endpoint {
+	return func(ctx context.Context, req interface{}) (interface{}, error) {
+		p := req.(*NeatThing)
+		res, view, err := s.NewNeatThing(ctx, p)
+		if err != nil {
+			return nil, err
+		}
+		vres := NewViewedNeatThing(res, view)
+		return vres, nil
 	}
 }
