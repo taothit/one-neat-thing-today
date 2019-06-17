@@ -6,6 +6,8 @@ import (
 	"encoding/gob"
 	"fmt"
 	"log"
+	"os"
+	"path"
 	"time"
 
 	bolt "github.com/etcd-io/bbolt"
@@ -13,7 +15,8 @@ import (
 )
 
 const (
-	dbStore = "./.db/ontt.db"
+	dbDir  = ".db"
+	dbFile = "ontt.db"
 
 	BucketName = "neatThings"
 )
@@ -31,17 +34,32 @@ type neatThingsrvc struct {
 
 // NewNeatThing returns the neatThing service implementation.
 // Panics when persistent store cannot be opened.
-func NewNeatThing(logger *log.Logger, dbFilePath *string) neatthing.Service {
-	return &neatThingsrvc{logger, loadDb(stringOrDefault(dbFilePath, dbStore))}
+func NewNeatThing(logger *log.Logger, dbFilePath *string) (neatthing.Service, error) {
+	defaultDbPath := fmt.Sprintf("./%s/%s", dbDir, dbFile)
+	datastore, err := loadDb(stringOrDefault(dbFilePath, defaultDbPath))
+	if err != nil {
+		return nil, fmt.Errorf("failed to load datastore: %v", err)
+	}
+	return &neatThingsrvc{logger, datastore}, nil
 }
 
-func loadDb(dbPath string) (datastore *bolt.DB) {
-	if db, err := bolt.Open(dbPath, 0600, bolt.DefaultOptions); err != nil {
-		panic(fmt.Sprintf("could not open neat things datastore: %v", err))
-	} else {
-		datastore = db
+func loadDb(dbPath string) (datastore *bolt.DB, err error) {
+	dir, _ := path.Split(dbPath)
+	if dir != "" {
+		if info, err := os.Stat(dir); info != nil && !info.IsDir() || err != nil && os.IsExist(err) {
+			return nil, fmt.Errorf("%s not a valid path to datastore: %v", dir, err)
+		} else if os.IsNotExist(err) {
+			if err := os.MkdirAll(dir, 0755); err != nil {
+				return nil, fmt.Errorf("failed to create datastore directory (%s): %v", dir, err)
+			}
+		}
 	}
-	return
+
+	if db, err := bolt.Open(dbPath, 0666, nil); err != nil {
+		return nil, fmt.Errorf("failed to open neat things datastore: %v", err)
+	} else {
+		return db, nil
+	}
 }
 
 func stringOrDefault(dbFilePath *string, defaultValue string) string {

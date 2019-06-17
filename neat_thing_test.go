@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"path"
 	"testing"
 	"time"
 
@@ -39,7 +40,7 @@ func TestNeatThingsrvc_NeatThingToday(t *testing.T) {
 	}
 
 	logger := testlog.New(t)
-	nts := discover.NewNeatThing(logger, strptr(testDatastore))
+	nts, _ := discover.NewNeatThing(logger, strptr(testDatastore))
 
 	if got, view, err := nts.NeatThingToday(context.Background()); got == nil || !cmp.Equal(view, "default") || err != nil {
 		t.Errorf("neatThingsrvc.NeatThingToday()=%s; got=[nt=%s|view=%s]; err=%v", want, got, view, err)
@@ -104,7 +105,7 @@ func todayAtMidnight() string {
 func TestNeatThingsrvc_NewNeatThing(t *testing.T) {
 	logger := testlog.New(t)
 	testDatastore := generateDatastoreName()
-	nts := discover.NewNeatThing(logger, strptr(testDatastore))
+	nts, _ := discover.NewNeatThing(logger, strptr(testDatastore))
 
 	if got, view, err := nts.NewNeatThing(context.Background(), want); got == nil || !cmp.Equal(*got, *want) || view != "full" || err != nil {
 		t.Errorf("NewNeatThing(%s)=%s; got=[nt=%s|view=%s]; err=%v", want, want, got, view, err)
@@ -113,5 +114,32 @@ func TestNeatThingsrvc_NewNeatThing(t *testing.T) {
 		if got, err := discover.Fetch(todayAtMidnight(), db); got == nil || !cmp.Equal(*got, *want) || err != nil {
 			t.Errorf("NewNeatThing(%s)=%s; got=[nt=%s|view=%s]; err=%v", want, want, got, view, err)
 		}
+	}
+}
+
+func TestNewNeatThing(t *testing.T) {
+	tests := []struct {
+		name string
+		path *string
+		err  error
+	}{
+		{"File only", strptr("file.db"), nil},
+		{"Directory exists", strptr(os.TempDir() + "/file.db"), nil},
+		{"Directory doesn't exist", strptr("./.db/file.db"), nil},
+	}
+	var logger = testlog.New(t)
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			if _, err := discover.NewNeatThing(logger, test.path); err != nil && err != test.err {
+				t.Errorf("discover.NewNeatThing(logger, %s); err=%v", *test.path, err)
+			} else {
+				if _, err := os.Stat(*test.path); os.IsNotExist(err) {
+					t.Errorf("discover.NewNeatThing(logger, %s); err=%v", *test.path, err)
+				}
+			}
+			p, f := path.Split(*test.path)
+			_ = os.Remove(f)
+			_ = os.Remove(p)
+		})
 	}
 }
