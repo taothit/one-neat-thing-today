@@ -140,8 +140,8 @@ func TestNewNeatThing(t *testing.T) {
 				}
 			}
 			p, f := path.Split(*test.path)
+			_ = os.RemoveAll(p)
 			_ = os.Remove(f)
-			_ = os.Remove(p)
 		})
 	}
 }
