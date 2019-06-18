@@ -3,7 +3,7 @@ go:
 - master
 os:
 - linux
-- osx
+# - osx --- Will reinstante when I figure out how to only execute docker commands when os =linux
 services:
 - docker
 before_install:
