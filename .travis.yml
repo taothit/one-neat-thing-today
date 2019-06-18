@@ -1,10 +1,20 @@
 language: go
 go:
-  - master
+- master
 os:
-  - linux
-  - osx
+- linux
+- osx
+services:
+- docker
+before_install:
+- docker pull golang:latest
 script:
-  - env GO111MODULE=on go build
-  - env GO111MODULE=on go test
-  - docker build -t taothit/one-neat-thing-today .
+- env GO111MODULE=on go build
+- env GO111MODULE=on go test
+after_success:
+- docker build -t taothit/one-neat-thing-today
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+- docker push taothit/one-neat-thing-today:latest
+env:
+  matrix:
+    secure: iA5KPkAV8r2A+tUAqWw3RsK/oe41dp2PttZTMx0WyRxd64oXL2VVLoxC9XwuyQKPoO8Ma1IRmnieq4E87KIot9Hk9Jgd0qn/8gvdyHS4L4sYe5ZMQxrT+INBNP/aCAacahnxWagyNaVK0x3nVaOZp7guc/6bdYxtAbbgTSLpV079g2Zkejhs4fjGd0Yl/dAtvygjwvhofh9b9Rb5vrUrTcTRtC4tNL86o+a46ugla8qfDPRHINWZPdbC/8xrJ6NLvynxBYmhnp8nV66Sswi6AyMYR+4uYohvZYVqYv6+7F2+bANY1yybeA4zj+Ggn8E1YTFeOpW842Ayo2CvcrNodnewTwSQXfkN91lDANCeokUeSEz/vKdGAk1y235OB/RPIzvAP2D1g3pGXDlWaywRyTNswwV4bfTzOKwuXZMyxmdBc07Uma2dgdQzLcct4z9c5/pfXJ0My5kvHgS7VnlEwZj9CAc8F8U0EaOtci7sOYa+NUUbMcLcV8m8yvr76VDU0Q5YWcTtzMV3lowNdloDV1KozHrKKAu+inQOvN/tTX+M1u7K3oUovrTlzSspsG5YCXxd/QYMiBF5ASrWcEX0lIcD1TnpssBGUenOwgbdvKzqDiLVvd+xh55NJ81nVFdZvPaNRMmHCm5gWXgwfPtgJakQmpGKDfvbTou8pJsvN+M=
