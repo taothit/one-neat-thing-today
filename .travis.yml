@@ -12,9 +12,6 @@ script:
 - env GO111MODULE=on go build
 - env GO111MODULE=on go test
 after_success:
-  if: os = linux AND \
-      branch = master AND \
-      tag =~ ^v
 - docker build -t taothit/one-neat-thing-today
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 - docker push taothit/one-neat-thing-today:latest
