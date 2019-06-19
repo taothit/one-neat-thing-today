@@ -1,7 +1,7 @@
 language: go
 go:
   - "1.12"
-  
+
 env:
   global:
     - DOCKER_USERNAME=taothit
@@ -20,8 +20,8 @@ jobs:
   include:
     - stage: Test
       script:
-        - go build
-        - go test
+        - go build .
+        - go test .
     - stage: Build service image
       os: linux
       before_script:
