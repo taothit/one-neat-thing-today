@@ -37,7 +37,6 @@ jobs:
 
 cache:
   directories:
-    - $HOME/.cache/go-build
     - $HOME/gopath/pkg/mod
 
 
