@@ -8,7 +8,6 @@ import (
 	"math/rand"
 	"os"
 	"path"
-	"strings"
 	"testing"
 	"time"
 
@@ -86,8 +85,7 @@ func openTestDatastore(testDatastore string, t *testing.T) *bolt.DB {
 }
 
 func generateDatastoreName() string {
-	p := fmt.Sprintf("%s/test-%d.db", os.TempDir(), rand.Int())
-	return strings.Replace(p, strings.Repeat(string(os.PathSeparator), 2), string(os.PathSeparator), -1)
+	return path.Join(os.TempDir(), fmt.Sprintf("test-%d.db", rand.Int63()))
 }
 
 func encode(record *neatthing.NeatThing, t *testing.T) *bytes.Buffer {
