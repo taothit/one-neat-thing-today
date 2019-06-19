@@ -13,16 +13,15 @@ env:
 services:
   - docker
 
-os:
-  - linux
-  - osx
-
 jobs:
   include:
     - stage: Test
+      os:
+        - linux
+        - osx
       install:
-        - go build .
-        - go test .
+        - env GO111MODULE=on go build .
+        - env GO111MODULE=on go test .
     - stage: Build service image
       os: linux
       before_script:
