@@ -1,24 +1,24 @@
 language: go
 go:
   - "1.12"
+env:
+  global:
+    - DOCKER_USERNAME=taothit
+    - GO111MODULE=on
+  matrix:
+    secure: iA5KPkAV8r2A+tUAqWw3RsK/oe41dp2PttZTMx0WyRxd64oXL2VVLoxC9XwuyQKPoO8Ma1IRmnieq4E87KIot9Hk9Jgd0qn/8gvdyHS4L4sYe5ZMQxrT+INBNP/aCAacahnxWagyNaVK0x3nVaOZp7guc/6bdYxtAbbgTSLpV079g2Zkejhs4fjGd0Yl/dAtvygjwvhofh9b9Rb5vrUrTcTRtC4tNL86o+a46ugla8qfDPRHINWZPdbC/8xrJ6NLvynxBYmhnp8nV66Sswi6AyMYR+4uYohvZYVqYv6+7F2+bANY1yybeA4zj+Ggn8E1YTFeOpW842Ayo2CvcrNodnewTwSQXfkN91lDANCeokUeSEz/vKdGAk1y235OB/RPIzvAP2D1g3pGXDlWaywRyTNswwV4bfTzOKwuXZMyxmdBc07Uma2dgdQzLcct4z9c5/pfXJ0My5kvHgS7VnlEwZj9CAc8F8U0EaOtci7sOYa+NUUbMcLcV8m8yvr76VDU0Q5YWcTtzMV3lowNdloDV1KozHrKKAu+inQOvN/tTX+M1u7K3oUovrTlzSspsG5YCXxd/QYMiBF5ASrWcEX0lIcD1TnpssBGUenOwgbdvKzqDiLVvd+xh55NJ81nVFdZvPaNRMmHCm5gWXgwfPtgJakQmpGKDfvbTou8pJsvN+M=
+services:
+  - docker
 
 jobs:
   include:
-    - env:
-        global:
-          - DOCKER_USERNAME=taothit
-        matrix:
-          secure: iA5KPkAV8r2A+tUAqWw3RsK/oe41dp2PttZTMx0WyRxd64oXL2VVLoxC9XwuyQKPoO8Ma1IRmnieq4E87KIot9Hk9Jgd0qn/8gvdyHS4L4sYe5ZMQxrT+INBNP/aCAacahnxWagyNaVK0x3nVaOZp7guc/6bdYxtAbbgTSLpV079g2Zkejhs4fjGd0Yl/dAtvygjwvhofh9b9Rb5vrUrTcTRtC4tNL86o+a46ugla8qfDPRHINWZPdbC/8xrJ6NLvynxBYmhnp8nV66Sswi6AyMYR+4uYohvZYVqYv6+7F2+bANY1yybeA4zj+Ggn8E1YTFeOpW842Ayo2CvcrNodnewTwSQXfkN91lDANCeokUeSEz/vKdGAk1y235OB/RPIzvAP2D1g3pGXDlWaywRyTNswwV4bfTzOKwuXZMyxmdBc07Uma2dgdQzLcct4z9c5/pfXJ0My5kvHgS7VnlEwZj9CAc8F8U0EaOtci7sOYa+NUUbMcLcV8m8yvr76VDU0Q5YWcTtzMV3lowNdloDV1KozHrKKAu+inQOvN/tTX+M1u7K3oUovrTlzSspsG5YCXxd/QYMiBF5ASrWcEX0lIcD1TnpssBGUenOwgbdvKzqDiLVvd+xh55NJ81nVFdZvPaNRMmHCm5gWXgwfPtgJakQmpGKDfvbTou8pJsvN+M=
-
-    - services:
-        - docker
     - stage: Test
       os:
         - linux
         - osx
       script:
-        - env GO111MODULE=on go build
-        - env GO111MODULE=on go test
+        - go build .
+        - go test ./...
     - stage: Build service image
       os: linux
       before_script:
