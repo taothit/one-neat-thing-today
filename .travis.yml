@@ -20,7 +20,6 @@ jobs:
         - linux
         - osx
       install:
-        - env GO111MODULE=on go build .
         - env GO111MODULE=on go test .
     - stage: Build service image
       os: linux
