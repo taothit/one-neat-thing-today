@@ -1,4 +1,7 @@
 language: go
+go:
+  - "1.12"
+cache: false
 
 env:
   global:
@@ -32,10 +35,6 @@ jobs:
         - docker pull golang
       script:
         - docker build -t $DOCKER_USERNAME/one-neat-thing-today -f ./assembly/cli/Dockerfile .
-
-cache:
-  directories:
-    - $HOME/gopath/pkg/mod
 
 
 
