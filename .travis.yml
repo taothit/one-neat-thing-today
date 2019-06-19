@@ -19,7 +19,7 @@ os:
 jobs:
   include:
     - stage: Test
-      script:
+      install:
         - go build .
         - go test .
     - stage: Build service image
