@@ -34,7 +34,7 @@ jobs:
       before_script:
         - docker pull golang
       script:
-        - docker build -t $DOCKER_USERNAME/one-neat-thing-today -f ./assembly/cli/Dockerfile .
+        - docker build -t $DOCKER_USERNAME/ontt-cli -f ./assembly/cli/Dockerfile .
 
 
 
