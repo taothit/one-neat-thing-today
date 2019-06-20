@@ -9,6 +9,8 @@ EXPOSE $GRPC
 
 COPY . build
 
+RUN ls -al . && ls -al src
+
 WORKDIR build
 
 RUN go mod download
