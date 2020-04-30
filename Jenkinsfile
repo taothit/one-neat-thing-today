@@ -11,5 +11,10 @@ pipeline {
                 sh 'go install .' 
             }
         }
+        stage('Test') {
+            steps {
+                sh 'go test .'
+            }
+        }
     }
 }
