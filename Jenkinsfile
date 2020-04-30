@@ -1,19 +1,27 @@
 pipeline {
     agent {
         docker {
-            image 'golang:latest' 
-            args '-v /root/.m2:/root/.m2' 
+            image 'golang:latest'
+            args '-v $HOME/.cache:/.cache:rw' 
         }
     }
+    options {
+        skipStagesAfterUnstable()
+    }
     stages {
-        stage('Build') { 
+        stage("Prepare Go modules cache") {
             steps {
-                sh 'go install .' 
+                sh 'go mod vendor'
             }
         }
         stage('Test') {
             steps {
-                sh 'go test .'
+                sh 'go test -v .'
+            }
+        }
+        stage('Build') { 
+            steps {
+                sh 'go build .' 
             }
         }
     }
